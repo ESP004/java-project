@@ -161,7 +161,8 @@ public class Transactions extends JFrame implements ActionListener{
         }
         else if(ae.getSource() == exit)
         {
-            System.exit(0);
+            setVisible(false);
+            new Login();
         }
     }
     

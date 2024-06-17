@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class SignupPage1 extends JFrame implements ActionListener{
     
     Random r1;
-    JButton next;
+    JButton next, back;
     JTextField t1,t2,t3,t4,t5,t6,t7;
     JRadioButton male,female,married,unmarried;
     JDateChooser d1;
@@ -204,12 +204,21 @@ public class SignupPage1 extends JFrame implements ActionListener{
         
         //                    add next button
         next = new JButton("Next");
-        next.setBounds(690, 650, 100, 30);
+        next.setBounds(292, 650, 100, 30);
         next.setBackground(BLACK);
         next.setForeground(WHITE);
         next.setFont(new Font("Arial",Font.BOLD,20));
         next.addActionListener(this);
-        add(next);        
+        add(next);    
+        
+        //                    add back button
+        back = new JButton("Back");
+        back.setBounds(592, 650, 100, 30);
+        back.setBackground(BLACK);
+        back.setForeground(WHITE);
+        back.setFont(new Font("Arial",Font.BOLD,20));
+        back.addActionListener(this);
+        add(back);    
         
         
         //create frame
@@ -222,146 +231,157 @@ public class SignupPage1 extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae) 
     {
-        //take responce of text fields
-        fromno = "" + from_no;
-        String name = t1.getText().trim();
-        String fname = t2.getText().trim();
-        //response of dob
-        String dob= ((JTextField) d1.getDateEditor().getUiComponent()).getText().trim();
-        String email = t3.getText().trim();
-        String address = t4.getText().trim();
-        String pincode = t5.getText().trim();
-        String city = t6.getText().trim();
-        String state = t7.getText().trim();
-        //take response of radio buttons
-        //for gender
-        String gender = null;
-        if(male.isSelected())
-        {
-            gender = "male";
-        }
-        else if(female.isSelected())
-        {
-            gender = "female";
-        }
-        //for marital status
-        String mstatus = null;
-        if(married.isSelected())
-        {
-            mstatus = "married";
-        }
-        else if(unmarried.isSelected())
-        {
-            mstatus = "unmarried";
-        }
         
-        //hit responce into database
-        try
+        if(ae.getSource() == next)
         {
-            //apply vallidition
-            if(name.equals(""))
+            
+        
+            //take responce of text fields
+            fromno = "" + from_no;
+            String name = t1.getText().trim();
+            String fname = t2.getText().trim();
+            //response of dob
+            String dob= ((JTextField) d1.getDateEditor().getUiComponent()).getText().trim();
+            String email = t3.getText().trim();
+            String address = t4.getText().trim();
+            String pincode = t5.getText().trim();
+            String city = t6.getText().trim();
+            String state = t7.getText().trim();
+            //take response of radio buttons
+            //for gender
+            String gender = null;
+            if(male.isSelected())
             {
-                JOptionPane.showMessageDialog(null,"Please enter your name" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
-                return;
+                gender = "male";
             }
-            else if(fname.equals(""))
+            else if(female.isSelected())
             {
-                JOptionPane.showMessageDialog(null,"Please enter your fathers name" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
-                return;
+                gender = "female";
             }
-            else if(dob.equals(""))
+            //for marital status
+            String mstatus = null;
+            if(married.isSelected())
             {
-                JOptionPane.showMessageDialog(null,"Please enter your date of birth" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
-                return;
+                mstatus = "married";
             }
-            else if(gender.equals(""))
+            else if(unmarried.isSelected())
             {
-                JOptionPane.showMessageDialog(null,"Please select your gender" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
-                return;
+                mstatus = "unmarried";
             }
-            else if(mstatus.equals(""))
+
+            //hit responce into database
+            try
             {
-                JOptionPane.showMessageDialog(null,"Select marittal status" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
-            }
-            else if(email.equals(""))
-            {
-                JOptionPane.showMessageDialog(null,"Please enter your email" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            else if(address.equals(""))
-            {
-                JOptionPane.showMessageDialog(null,"Please enter your address" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            else if(pincode.equals(""))
-            {
-                JOptionPane.showMessageDialog(null,"Please enter your pin code" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            else if(city.equals(""))
-            {
-                JOptionPane.showMessageDialog(null,"Please enter your city" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            else if(state.equals(""))
-            {
-                JOptionPane.showMessageDialog(null,"Please enter your state" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            //             prepare the querry for insert data
-            else
-            {
-                if(!valEmail(email))
+                //apply vallidition
+                if(name.equals(""))
                 {
-                    JOptionPane.showMessageDialog(null,"Invalid email" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Please enter your name" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                else if(!valAlpha(name))
+                else if(fname.equals(""))
                 {
-                    JOptionPane.showMessageDialog(null,"Name only contains alphabets" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Please enter your fathers name" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                else if(!valAlpha(fname))
+                else if(dob.equals(""))
                 {
-                    JOptionPane.showMessageDialog(null,"Father name only contains alphabets" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Please enter your date of birth" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                else if(!valNum(pincode))
+                else if(gender.equals(""))
                 {
-                    JOptionPane.showMessageDialog(null,"Pincode only contains numeric values" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Please select your gender" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                else if(!valAlphaNum(address))
+                else if(mstatus.equals(""))
                 {
-                    JOptionPane.showMessageDialog(null,"address contains alphanumeric values" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Select marittal status" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
+                }
+                else if(email.equals(""))
+                {
+                    JOptionPane.showMessageDialog(null,"Please enter your email" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                else if(!valAlpha(city))
+                else if(address.equals(""))
                 {
-                    JOptionPane.showMessageDialog(null,"city only contains alphabets" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Please enter your address" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                else if(!valAlpha(state))
+                else if(pincode.equals(""))
                 {
-                    JOptionPane.showMessageDialog(null,"state contains alphanumeric values" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Please enter your pin code" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
                     return;
                 }
+                else if(city.equals(""))
+                {
+                    JOptionPane.showMessageDialog(null,"Please enter your city" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                else if(state.equals(""))
+                {
+                    JOptionPane.showMessageDialog(null,"Please enter your state" , "EMPTY FIELD" , JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                //             prepare the querry for insert data
                 else
                 {
-                    Conn c1 = new Conn();
-                    String querry = "insert into signup values('"+fromno+"','"+name+"','"+fname+"','"+dob+"','"+gender+"','"+email+"','"+mstatus+"','"+address+"','"+pincode+"','"+city+"','"+state+"')";
-                    c1.s1.executeUpdate(querry);
+                    if(!valEmail(email))
+                    {
+                        JOptionPane.showMessageDialog(null,"Invalid email" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    else if(!valAlpha(name))
+                    {
+                        JOptionPane.showMessageDialog(null,"Name only contains alphabets" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    else if(!valAlpha(fname))
+                    {
+                        JOptionPane.showMessageDialog(null,"Father name only contains alphabets" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    else if(!valNum(pincode))
+                    {
+                        JOptionPane.showMessageDialog(null,"Pincode only contains numeric values" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    else if(!valAlphaNum(address))
+                    {
+                        JOptionPane.showMessageDialog(null,"address contains alphanumeric values" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    else if(!valAlpha(city))
+                    {
+                        JOptionPane.showMessageDialog(null,"city only contains alphabets" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    else if(!valAlpha(state))
+                    {
+                        JOptionPane.showMessageDialog(null,"state contains alphanumeric values" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    else
+                    {
+                        Conn c1 = new Conn();
+                        String querry = "insert into signup values('"+fromno+"','"+name+"','"+fname+"','"+dob+"','"+gender+"','"+email+"','"+mstatus+"','"+address+"','"+pincode+"','"+city+"','"+state+"')";
+                        c1.s1.executeUpdate(querry);
+                    }
                 }
+                //open the signuppage2
+                setVisible(false);
+                new SignupPage2(fromno,name).setVisible(true);
             }
-            //open the signuppage2
-            setVisible(false);
-            new SignupPage2(fromno,name).setVisible(true);
+            catch(HeadlessException e)
+            {
+                System.out.println(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
-        catch(HeadlessException e)
+        else if(ae.getSource() == back)
         {
-            System.out.println(e);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            setVisible(false);
+            new Login();
         }
     }
     

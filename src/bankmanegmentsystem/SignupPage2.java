@@ -3,6 +3,8 @@ package bankmanegmentsystem;
 
 import static java.awt.Color.WHITE;
 import java.awt.*;
+import static java.awt.Color.BLACK;
+import static java.awt.Color.WHITE;
 import javax.swing.*;
 import java.awt.event.*;
 import java.sql.SQLException;
@@ -11,7 +13,7 @@ import java.util.logging.Logger;
 
 public class SignupPage2 extends JFrame implements ActionListener{
     
-    JButton next2;
+    JButton next2 , back;
     JComboBox b1,b2,b3,b4,b5;
     JTextField panno_textfield,adaharno_textfield;
     JRadioButton sinior_textfield,sinior_textfield2,exiting_textfield,exiting_textfield2;
@@ -185,12 +187,21 @@ public class SignupPage2 extends JFrame implements ActionListener{
         
         //add next button
         next2 = new JButton("Next");
-        next2.setBounds(740,630,100,30);
+        next2.setBounds(292, 650, 100, 30);
         next2.setFont(new Font("Arial",Font.BOLD,20));
         next2.setBackground(Color.BLACK);
         next2.setForeground(WHITE);
         next2.addActionListener(this);
         add(next2);
+        
+        //                    add back button
+        back = new JButton("Back");
+        back.setBounds(592, 650, 100, 30);
+        back.setBackground(BLACK);
+        back.setForeground(WHITE);
+        back.setFont(new Font("Arial",Font.BOLD,20));
+        back.addActionListener(this);
+        add(back);
         
         
         //add frame
@@ -204,92 +215,100 @@ public class SignupPage2 extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        //get data from the form/user[module 1]
-        String religion = (String) b1.getSelectedItem();
-        String category = (String) b2.getSelectedItem();
-        String income = (String) b3.getSelectedItem();
-        String qualification = (String) b4.getSelectedItem();
-        String occupation = (String) b5.getSelectedItem();
-        String pan_no = panno_textfield.getText().trim();
-        String adhar_no = adaharno_textfield.getText().trim();
-        String sinior_citizen = null;
-        if(sinior_textfield.isSelected())
-        {
-            sinior_citizen = "yes";
-        }
-        else if(sinior_textfield2.isSelected())
-        {
-            sinior_citizen = "no";
-        }
-        String exiting_account = null;
-        if(exiting_textfield.isSelected())
-        {
-            exiting_account = "yes";
-        }
-        else if(exiting_textfield2.isSelected())
-        {
-            exiting_account = "no";
-        }
         
-        //apply validition
-       try{
-           if(religion.equals("None"))
-           {
-               JOptionPane.showMessageDialog(null,"Please select a Religion");
-               return;
-           }
-           else if(category.equals("None"))
-           {
-               JOptionPane.showMessageDialog(null,"Please select a category");
-               return;
-           }
-           else if(pan_no.equals(""))
-           {
-               JOptionPane.showMessageDialog(null,"Pan no is mandotory");
-               return;
-           }
-           else if(adhar_no.equals(""))
-           {
-               JOptionPane.showMessageDialog(null,"Adahar no is mandotory");
-               return;
-           }
-           else if(sinior_citizen == null)
-           {
-               JOptionPane.showMessageDialog(null,"Fill all the mandotory field first");
-               return;
-           }
-           else if(exiting_account == null)
-           {
-               JOptionPane.showMessageDialog(null,"Fill all the mandotory field first");
-               return;
-           }
-           else
-           {
-               if(!valPanno(pan_no))
+        if(e.getSource() == next2)
+        {
+            //get data from the form/user[module 1]
+            String religion = (String) b1.getSelectedItem();
+            String category = (String) b2.getSelectedItem();
+            String income = (String) b3.getSelectedItem();
+            String qualification = (String) b4.getSelectedItem();
+            String occupation = (String) b5.getSelectedItem();
+            String pan_no = panno_textfield.getText().trim();
+            String adhar_no = adaharno_textfield.getText().trim();
+            String sinior_citizen = null;
+            if(sinior_textfield.isSelected())
+            {
+                sinior_citizen = "yes";
+            }
+            else if(sinior_textfield2.isSelected())
+            {
+                sinior_citizen = "no";
+            }
+            String exiting_account = null;
+            if(exiting_textfield.isSelected())
+            {
+                exiting_account = "yes";
+            }
+            else if(exiting_textfield2.isSelected())
+            {
+                exiting_account = "no";
+            }
+
+            //apply validition
+           try{
+               if(religion.equals("None"))
                {
-                   JOptionPane.showMessageDialog(null,"Pan no contains 10 alphanumeric values only" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                   JOptionPane.showMessageDialog(null,"Please select a Religion");
                    return;
                }
-               else if(!valAdharno(adhar_no))
+               else if(category.equals("None"))
                {
-                   JOptionPane.showMessageDialog(null,"Adhar no contains 12 digits only" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                   JOptionPane.showMessageDialog(null,"Please select a category");
                    return;
                }
-               Conn c2 = new Conn();
-               String queery2 = "insert into signuptwo values('"+fromno+"','"+religion+"','"+category+"','"+income+"','"+qualification+"','"+occupation+"','"+pan_no+"','"+adhar_no+"','"+sinior_citizen+"','"+exiting_account+"')";
-               c2.s1.executeUpdate(queery2);
+               else if(pan_no.equals(""))
+               {
+                   JOptionPane.showMessageDialog(null,"Pan no is mandotory");
+                   return;
+               }
+               else if(adhar_no.equals(""))
+               {
+                   JOptionPane.showMessageDialog(null,"Adahar no is mandotory");
+                   return;
+               }
+               else if(sinior_citizen == null)
+               {
+                   JOptionPane.showMessageDialog(null,"Fill all the mandotory field first");
+                   return;
+               }
+               else if(exiting_account == null)
+               {
+                   JOptionPane.showMessageDialog(null,"Fill all the mandotory field first");
+                   return;
+               }
+               else
+               {
+                   if(!valPanno(pan_no))
+                   {
+                       JOptionPane.showMessageDialog(null,"Pan no contains 10 alphanumeric values only" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                       return;
+                   }
+                   else if(!valAdharno(adhar_no))
+                   {
+                       JOptionPane.showMessageDialog(null,"Adhar no contains 12 digits only" , "INVALID" , JOptionPane.ERROR_MESSAGE);
+                       return;
+                   }
+                   Conn c2 = new Conn();
+                   String queery2 = "insert into signuptwo values('"+fromno+"','"+religion+"','"+category+"','"+income+"','"+qualification+"','"+occupation+"','"+pan_no+"','"+adhar_no+"','"+sinior_citizen+"','"+exiting_account+"')";
+                   c2.s1.executeUpdate(queery2);
+               }
+               //redirect to signup page 3
+               setVisible(false);
+               new SignupPage3(fromno,acc_holder_name).setVisible(true);
            }
-           //redirect to signup page 3
-           setVisible(false);
-           new SignupPage3(fromno,acc_holder_name).setVisible(true);
-       }
-       catch(HeadlessException e2)
-       {
-           System.out.println(e2);
-       } catch (SQLException ex) {
-            Logger.getLogger(SignupPage2.class.getName()).log(Level.SEVERE, null, ex);
+           catch(HeadlessException e2)
+           {
+               System.out.println(e2);
+           } catch (SQLException ex) {
+                Logger.getLogger(SignupPage2.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        
+        else if(e.getSource() == back)
+        {
+            setVisible(false);
+            new Login();
+        }
     }
     
     //logic for validating adhar no
